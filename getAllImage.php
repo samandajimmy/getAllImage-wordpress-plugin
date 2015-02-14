@@ -13,23 +13,15 @@ This plugin is for my  use only
 */
 
 class getAllImage {
-    protected $pluginPath;
-    protected $pluginUrl;
 	
     public function __construct()
     {
-        // Set Plugin Path
-        $this->pluginPath = dirname(__FILE__);
-     
-        // Set Plugin URL
-        $this->pluginUrl = WP_PLUGIN_URL . '/wp-getAllImage';
-		
         add_shortcode('getAllImage', array($this, 'shortcode'));
     }
      
     public function shortcode($atts)
     {
-		// pass the attributes to getImages function and render the images
+    	
 		return $this->getImages();
     }
 	
@@ -82,18 +74,11 @@ function get_AllImage()
 
 add_filter( 'query_vars', 'se67095_add_query_vars');
 
-/**
-*   Add the 'my_plugin' query variable so WordPress
-*   won't remove it.
-*/
 function se67095_add_query_vars($vars){
     $vars[] = "getAllImage";
     return $vars;
 }
 
-/**
-*   check for  'my_plugin' query variable and do what you want if its there
-*/
 add_action('template_redirect', 'se67905_my_template');
 
 function se67905_my_template($template) {
@@ -102,9 +87,7 @@ function se67905_my_template($template) {
 	$segmentss = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	$segments = explode('?', $segmentss);
 	$vario = $segments[1];
-
-    // If the 'my_plugin' query var isn't appended to the URL,
-    // don't do anything and return default
+	
     if($vario == 'images=feed'){
 		$getAllImage = new getAllImage;
 		echo $getAllImage->getImages();
